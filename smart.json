@@ -3,6 +3,6 @@
   "description": "Generate an icon font from SVG files",
   "homepage": "https://github.com/andrefgneves/meteor-iconfont",
   "author": "André Neves (https://twitter.com/seven)",
-  "version": "0.1",
+  "version": "0.1.0",
   "git": "https://github.com/andrefgneves/meteor-iconfont.git"
 }
