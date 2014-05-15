@@ -7,8 +7,7 @@
     font-style: normal;
 }
 
-[class^='icon-'],
-[class*=' icon-'] {
+<%= classNames %> {
     font-family: '<%= fontName %>';
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -21,7 +20,7 @@
 }
 
 <% _.forEach(glyphCodepointMap, function(codepoint, name) { %>
-  .icon-<%= name %>:before {
+  .<%= classPrefix %><%= name %>:before {
     content: '\<%= codepoint %>';
   }
 

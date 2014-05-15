@@ -30,6 +30,7 @@ var handler = function (compileStep) {
     fontHeight: 512,
     descent: 64,
     normalize: true,
+    classPrefix: 'icon-',
     types: [
       'svg',
       'ttf',
@@ -178,6 +179,10 @@ var generateStylesheet = function (compileStep, options) {
   var glyphCodepointMap = {};
   var fontSrcs = [];
 
+  var classNames = _.map(options.glyphs, function (glyph) {
+    return '.' + options.classPrefix + glyph.name.replace(/\s+/g, '-');
+  });
+
   _.each(options.glyphs, function (glyph) {
     glyphCodepointMap[glyph.name] = glyph.codepoint.toString(16);
   });
@@ -226,6 +231,8 @@ var generateStylesheet = function (compileStep, options) {
 
   var data = _.template(template, {
     glyphCodepointMap: glyphCodepointMap,
+    classPrefix: options.classPrefix,
+    classNames: classNames.join(', '),
     fontName: options.fontName,
     fontFaceBaseURL: options.fontFaceBaseURL,
     types: options.types,
