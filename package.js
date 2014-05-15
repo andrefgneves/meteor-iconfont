@@ -4,7 +4,7 @@ Package.describe({
 });
 
 Package._transitional_registerBuildPlugin({
-  name: 'meteor-iconfont',
+  name: 'iconfont',
   use: [],
   sources: [
     'plugin/iconfont.js'
