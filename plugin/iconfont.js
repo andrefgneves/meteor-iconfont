@@ -15,6 +15,15 @@ Plugin.registerSourceHandler('iconfont.json', function (compileStep) {
   return handler(compileStep);
 });
 
+Plugin.registerSourceHandler('svg', function (compileStep) {
+  compileStep.inputPath = 'iconfont.json';
+
+  if (! compileStep.archMatches('browser'))
+    return;
+
+  return handler(compileStep);
+});
+
 var handler = function (compileStep) {
   var optionsFile = path.join(process.cwd(), compileStep.inputPath);
   var options = {};
@@ -28,6 +37,7 @@ var handler = function (compileStep) {
     fontFaceBaseURL: '/fonts/icons',
     fontName: 'icons',
     fontHeight: 512,
+    cssDestBasePath: 'client/',
     descent: 64,
     normalize: true,
     classPrefix: 'icon-',
@@ -239,8 +249,12 @@ var generateStylesheet = function (compileStep, options) {
     fontSrcs: fontSrcs
   });
 
+  var cssDestPath = path.join(options.cssDestBasePath, options.fontName) + '.css';
+
+  fs.writeFileSync(cssDestPath, data);
+
   compileStep.addStylesheet({
-    path: path.join('client', options.fontName) + '.css',
+    path: cssDestPath,
     data: data
   });
 };
