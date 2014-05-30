@@ -37,7 +37,7 @@ var handler = function (compileStep) {
     fontFaceBaseURL: '/fonts/icons',
     fontName: 'icons',
     fontHeight: 512,
-    cssDestBasePath: 'client/',
+    cssDestBasePath: 'client',
     descent: 64,
     normalize: true,
     classPrefix: 'icon-',
