@@ -3,10 +3,13 @@ var fs = Npm.require('fs-extra');
 var glob = Npm.require('multi-glob');
 var path = Npm.require('path');
 var temp = Npm.require('temp').track();
+var md5 = Npm.require('md5');
 var svg2ttf = Npm.require('svg2ttf');
 var ttf2eot = Npm.require('ttf2eot');
 var ttf2woff = Npm.require('ttf2woff');
 var svgicons2svgfont = Npm.require('svgicons2svgfont');
+var optionsFile = path.join(process.cwd(), 'iconfont.json');
+var cacheFilePath = path.join(process.cwd(), '.meteor/iconfont.cache');
 
 Plugin.registerSourceHandler('iconfont.json', function (compileStep) {
   if (! compileStep.archMatches('browser'))
@@ -25,7 +28,6 @@ Plugin.registerSourceHandler('svg', function (compileStep) {
 });
 
 var handler = function (compileStep) {
-  var optionsFile = path.join(process.cwd(), compileStep.inputPath);
   var options = {};
 
   if (fs.existsSync(optionsFile))
@@ -55,12 +57,44 @@ var handler = function (compileStep) {
   }
 
   options.files = getFiles(options.src);
-  options.fontFaceURLS = {};
-  options.types = _.map(options.types, function (type) {
-    return type.toLowerCase();
+
+  if (didInvalidateCache(options)) {
+    console.log('[iconfont] generating');
+
+    options.fontFaceURLS = {};
+    options.types = _.map(options.types, function (type) {
+      return type.toLowerCase();
+    });
+
+    generateFonts(compileStep, options);
+  }
+};
+
+var didInvalidateCache = function (options) {
+  var didInvalidate = false;
+  var oldCacheChecksum = fs.readFileSync(cacheFilePath, { encoding: 'utf8' });
+  var newCacheChecksum = generateCacheChecksum(options);
+
+  if (!fs.existsSync(cacheFilePath) || newCacheChecksum !== oldCacheChecksum) {
+    fs.writeFileSync(cacheFilePath, newCacheChecksum);
+
+    return true;
+  }
+
+  return false;
+}
+
+var generateCacheChecksum = function (options) {
+  var checksums = [];
+  var settingsChecksum = md5(fs.readFileSync(optionsFile));
+
+  _.each(options.files, function(file) {
+    var checksum = md5(fs.readFileSync(file));
+
+    checksums.push(checksum);
   });
 
-  generateFonts(compileStep, options);
+  return md5(settingsChecksum + JSON.stringify(checksums));
 };
 
 var generateFonts = function (compileStep, options) {
