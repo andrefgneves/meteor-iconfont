@@ -59,7 +59,7 @@ var handler = function (compileStep) {
   options.files = getFiles(options.src);
 
   if (didInvalidateCache(options)) {
-    console.log('[iconfont] generating');
+    console.log('\n[iconfont] generating');
 
     options.fontFaceURLS = {};
     options.types = _.map(options.types, function (type) {
@@ -89,7 +89,7 @@ var generateCacheChecksum = function (options) {
   var settingsChecksum = md5(fs.readFileSync(optionsFile));
 
   _.each(options.files, function(file) {
-    var checksum = md5(fs.readFileSync(file));
+    var checksum = md5(path.basename(file) + fs.readFileSync(file));
 
     checksums.push(checksum);
   });
@@ -125,7 +125,7 @@ var generateSVGFont = function (files, options, done) {
     if (matches) {
       return {
         codepoint: (matches[1] ? parseInt(matches[1], 16) : codepoint++),
-        name: path.basename(matches[2]),
+        name: path.basename(matches[2]).toLowerCase().replace(/\s/g, '-'),
         stream: fs.createReadStream(file)
       };
     }
