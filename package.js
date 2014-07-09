@@ -1,6 +1,6 @@
 Package.describe({
   summary: 'Generate an icon font from SVG files',
-  version: '0.1.2'
+  version: '0.1.3'
 });
 
 Package._transitional_registerBuildPlugin({
@@ -17,7 +17,8 @@ Package._transitional_registerBuildPlugin({
     'lodash': '2.4.1',
     'multi-glob': '0.4.0',
     'temp': '0.7.0',
-    'fs-extra': '0.8.1'
+    'fs-extra': '0.8.1',
+    'MD5': '1.2.1'
   }
 });
 
