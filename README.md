@@ -55,12 +55,21 @@ Type: `number` Default: `512`
 
 The height of the outputed fonts.
 
-#### cssDestBasePath
+    stylesheetDestBasePath: 'client',
+    stylesheetFilename: null,
+
+
+#### stylesheetDestBasePath
 
 Type: `string` Default: `client`
 
-Path where the generated CSS should be outputed.
+Path where the generated stylesheet should be outputed.
 
+#### stylesheetFilename
+
+Type: `string` Default: the fontName value plus `.css`
+
+The filename of the genetated stylesheet.
 
 #### descent
 

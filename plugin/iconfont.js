@@ -39,7 +39,8 @@ var handler = function (compileStep) {
     fontFaceBaseURL: '/fonts/icons',
     fontName: 'icons',
     fontHeight: 512,
-    cssDestBasePath: 'client',
+    stylesheetDestBasePath: 'client',
+    stylesheetFilename: null,
     descent: 64,
     normalize: true,
     classPrefix: 'icon-',
@@ -72,16 +73,22 @@ var handler = function (compileStep) {
 
 var didInvalidateCache = function (options) {
   var didInvalidate = false;
-  var oldCacheChecksum = fs.readFileSync(cacheFilePath, { encoding: 'utf8' });
   var newCacheChecksum = generateCacheChecksum(options);
+  var oldCacheChecksum;
 
-  if (!fs.existsSync(cacheFilePath) || newCacheChecksum !== oldCacheChecksum) {
-    fs.writeFileSync(cacheFilePath, newCacheChecksum);
+  if (!fs.existsSync(cacheFilePath)) {
+    didInvalidate = true;
+  } else {
+    oldCacheChecksum = fs.readFileSync(cacheFilePath, { encoding: 'utf8' });
 
-    return true;
+    didInvalidate = newCacheChecksum !== oldCacheChecksum;
   }
 
-  return false;
+  if (didInvalidate) {
+    fs.writeFileSync(cacheFilePath, newCacheChecksum);
+  }
+
+  return didInvalidate;
 }
 
 var generateCacheChecksum = function (options) {
@@ -283,14 +290,17 @@ var generateStylesheet = function (compileStep, options) {
     fontSrcs: fontSrcs
   });
 
-  var cssDestPath = path.join(options.cssDestBasePath, options.fontName) + '.css';
+  var stylesheetFilename = options.stylesheetFilename || (options.fontName + '.css');
+  var stylesheetDestPath = path.join(options.stylesheetDestBasePath, stylesheetFilename);
 
-  fs.writeFileSync(cssDestPath, data);
+  fs.writeFileSync(stylesheetDestPath, data);
 
-  compileStep.addStylesheet({
-    path: cssDestPath,
-    data: data
-  });
+  if (path.extname(stylesheetDestPath) === '.css') {
+    compileStep.addStylesheet({
+      path: stylesheetDestPath,
+      data: data
+    });
+  }
 };
 
 var getFontSrcURL = function (o) {
