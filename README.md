@@ -55,10 +55,6 @@ Type: `number` Default: `512`
 
 The height of the outputed fonts.
 
-    stylesheetDestBasePath: 'client',
-    stylesheetFilename: null,
-
-
 #### stylesheetDestBasePath
 
 Type: `string` Default: `client`
