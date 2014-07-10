@@ -1,6 +1,6 @@
 Package.describe({
   summary: 'Generate an icon font from SVG files',
-  version: '0.1.4'
+  version: '0.1.5'
 });
 
 Package._transitional_registerBuildPlugin({
