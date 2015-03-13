@@ -3,7 +3,7 @@
 
 Generate an icon webfont from SVG files, á la [grunt-webfont](https://github.com/sapegin/grunt-webfont). No _fontforge_ support.
 
-## Configuration
+## Options
 
 Configure the package by creating an `iconfont.json` file at the project's root and set any of the following properties:
 
@@ -67,6 +67,60 @@ Type: `string` Default: the fontName value plus `.css`
 
 The filename of the genetated stylesheet.
 
+#### stylesheetTemplate
+
+Type: `string` Default: path to a bundled template file
+
+The path to a Lodash template
+
+#### stylesheets
+
+Type: `object` Default: null
+
+An object that defined which files to generate and with what templates. If specified, `stylesheetFilename` and `stylesheetTemplate` are ignored.  
+
+Example for a possible usecase where you want the icons `content` value to be specified in a SASS map, and to access those variables in the icons selectors:
+
+```
+{
+	'_icon-classes.scss': 'private/icons-templatates/classes.tpl',
+	'_icon-variables.scss': 'private/icons-templatates/variables.tpl'
+}
+```
+
+This would create `_icon-classes.scss` and `_icon-variables.scss` at `stylesheetDestBasePath` with the contents of the respective compiled template. 
+
+
+`_icon-variables.scss`
+
+```
+$icons: (
+  my-icon '\e001',
+  my-other-icon '\e002',
+);
+```
+
+`_icon-classes.scss`
+
+```
+.my-icon {
+	content: map-get($icons, my-icon);
+}
+
+.my-other-icon {
+	content: map-get($icons, my-other-icon);
+}
+```
+
+`some-file.scss`
+
+```
+.thing:after {
+	font-family: icons;
+	content: map-get($icons, my-icon);
+}
+```
+
 #### descent
 
 Type: `number` Default: `64`
@@ -80,12 +134,11 @@ Type: `boolean` Default: `true`
 Normalize icons by scaling them to the `fontHeight` value.
 
 
-## ToDo:
+## To do:
 
-* Allow generating more that one font
-* Output to other stylesheet formats (scss, less, etc.)
-* Don't regenerate unless needed
-* ...
+* [ ] Allow generating more that one font
+* [x] Output to other stylesheet formats (scss, less, etc.)
+* [x] Don't regenerate unless needed
 
 ## License
 
