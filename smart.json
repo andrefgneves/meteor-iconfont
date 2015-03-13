@@ -1,5 +1,5 @@
 {
-    "name": "iconfont",
+    "name": "andrefgneves:iconfont",
     "description": "Generate an icon font from SVG files",
     "homepage": "https://github.com/andrefgneves/meteor-iconfont",
     "author": "Andre Neves (https://twitter.com/seven)",
