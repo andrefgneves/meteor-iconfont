@@ -31,7 +31,7 @@ Package.onUse(function (api) {
 });
 
 Package.on_test(function (api) {
-    api.use('iconfont');
+    api.use('andrefgneves:iconfont');
     api.use('tinytest');
 
     api.add_files('iconfont_tests.js');
