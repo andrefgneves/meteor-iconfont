@@ -8,7 +8,7 @@ Package.describe({
 Package.registerBuildPlugin({
     name: 'andrefgneves:iconfont',
 
-    use: ['coffeescript'],
+    use: ['coffeescript@1.0.6'],
 
     sources: [
         'plugin/iconfont.coffee'
