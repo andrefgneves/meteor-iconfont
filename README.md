@@ -43,12 +43,6 @@ Type: `array` Default: `[ 'svg', 'ttf', 'eot', 'woff' ]`
 
 The types of fonts to generate.
 
-#### stylesheetTemplatePath
-
-Type: `string` Default: `packages/iconfont/plugin/stylesheet.tpl`
-
-The path to the stylesheet template. This file must have a [Lodash's template](http://lodash.com/docs#template) compatible syntax.
-
 #### fontHeight
 
 Type: `number` Default: `512`
@@ -59,7 +53,7 @@ The height of the outputed fonts.
 
 Type: `string` Default: `client`
 
-Path where the generated stylesheet should be outputed.
+Path where the generated stylesheet should be outputed to.
 
 #### stylesheetFilename
 
@@ -77,7 +71,7 @@ The path to a Lodash template
 
 Type: `object` Default: null
 
-An object that defined which files to generate and with what templates. If specified, `stylesheetFilename` and `stylesheetTemplate` are ignored.  
+An object that defined which files to generate and with what templates. If specified, `stylesheetFilename` and `stylesheetTemplate` are ignored.
 
 Example for a possible usecase where you want the icons `content` value to be specified in a SASS map, and to access those variables in the icons selectors:
 
@@ -88,7 +82,7 @@ Example for a possible usecase where you want the icons `content` value to be sp
 }
 ```
 
-This would create `_icon-classes.scss` and `_icon-variables.scss` at `stylesheetDestBasePath` with the contents of the respective compiled template. 
+This would create `_icon-classes.scss` and `_icon-variables.scss` at `stylesheetDestBasePath` with the contents of the respective compiled template.
 
 
 `_icon-variables.scss`

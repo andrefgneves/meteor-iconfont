@@ -26,7 +26,7 @@ handler = (compileStep) ->
         normalize:              true
         classPrefix:            'icon-'
         stylesheetFilename:     null
-        stylesheetTemplate:     '.meteor/local/isopacks/andrefgneves_iconfont/os/packages/andrefgneves:iconfont/plugin/stylesheet.tpl'
+        stylesheetTemplate:     '.meteor/local/isopacks/andrefgneves_iconfont/os/packages/andrefgneves_iconfont/plugin/stylesheet.tpl'
         types: [
             'svg'
             'ttf'
@@ -232,7 +232,13 @@ generateStylesheets = (compileStep, options) ->
         stylesheets = options.stylesheets
 
     for fileName, filePath of stylesheets
-        template = fs.readFileSync path.join(process.cwd(), filePath), 'utf8'
+        templatePath = path.join process.cwd(), filePath
+
+        if not fs.existsSync templatePath
+            console.log "\n[iconfont] template file not found at #{templatePath}"
+            continue
+
+        template = fs.readFileSync templatePath, 'utf8'
 
         data = _.template template,
             glyphCodepointMap: glyphCodepointMap
@@ -287,6 +293,9 @@ loadJSONFile = (filePath) ->
         console.log 'Error: failed to parse ', filePath, ' as JSON'
 
         {}
+
+# Make meteor listen for changes on json files
+Plugin.registerSourceHandler 'json', archMatching: 'web', ->
 
 Plugin.registerSourceHandler 'iconfont.json', archMatching: 'web', handler
 Plugin.registerSourceHandler 'svg', archMatching: 'web', handler

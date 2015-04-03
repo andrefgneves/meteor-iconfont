@@ -1,6 +1,6 @@
 Package.describe({
     summary: 'Generate an icon font from SVG files',
-    version: '0.1.6',
+    version: '0.1.7',
     git:     'https://github.com/andrefgneves/meteor-iconfont.git',
     name:    'andrefgneves:iconfont'
 });
@@ -8,7 +8,7 @@ Package.describe({
 Package.registerBuildPlugin({
     name: 'andrefgneves:iconfont',
 
-    use: ['coffeescript@1.0.5'],
+    use: ['coffeescript'],
 
     sources: [
         'plugin/iconfont.coffee'
