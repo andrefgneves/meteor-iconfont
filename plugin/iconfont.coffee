@@ -294,8 +294,5 @@ loadJSONFile = (filePath) ->
 
         {}
 
-# Make meteor listen for changes on json files
-Plugin.registerSourceHandler 'json', archMatching: 'web', ->
-
 Plugin.registerSourceHandler 'iconfont.json', archMatching: 'web', handler
 Plugin.registerSourceHandler 'svg', archMatching: 'web', handler

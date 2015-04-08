@@ -1,6 +1,6 @@
 Package.describe({
     summary: 'Generate an icon font from SVG files',
-    version: '0.1.7',
+    version: '0.1.8',
     git:     'https://github.com/andrefgneves/meteor-iconfont.git',
     name:    'andrefgneves:iconfont'
 });
